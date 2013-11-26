@@ -2,9 +2,15 @@
 
 class HardwareIO < Sinatra::Application
   get "/read_weight.json" do
-    weight = settings.scale.read_with_retry
+    weight = nil
+    error = nil
+    if settings.scale
+      weight = settings.scale.read_with_retry
+    else
+      error = "Scale not setup"
+    end
     content_type :json
-   wrap_with_callback( { :WEIGHT => weight }.to_json )
+    wrap_with_callback( { :WEIGHT => weight, :ERROR => erorr }.to_json )
   end
 
   get "/print_item_label.json" do
