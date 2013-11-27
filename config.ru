@@ -10,7 +10,10 @@ require ::File.join( root, 'lib', 'scale' )
 require ::File.join( root, 'lib', 'printer' )
 require ::File.join( root, 'hardware_io' )
 
-HARDWARE = {:scale => Scale.new, :printer => Printer.new}
+HARDWARE = {
+  :scale => Scale.new, # Could specify scale path as parameter
+  :printer => Printer.new #Could specify printer name as parameter
+}
 
 HardwareIO.set :scale, HARDWARE[:scale]
 HardwareIO.set :printer, HARDWARE[:printer]
