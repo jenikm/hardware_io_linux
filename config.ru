@@ -11,9 +11,8 @@ require ::File.join( root, 'lib', 'printer' )
 require ::File.join( root, 'hardware_io' )
 
 scale_io = Scale.detect
-unless scale_io.empty?
-  puts "Configuring permissions for usb device: '#{scale_io}'"
-  `sudo chmod 666 #{scale_io}`
+unless scale_io.to_s.empty?
+  Scale.set_permissions_if_needed(scale_io)
 end
 
 HARDWARE = {

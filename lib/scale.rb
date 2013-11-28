@@ -52,9 +52,23 @@ class Scale < SerialPort
     5
   end
 
-  #Determines scale server interface
+  # Determines scale server interface
+  # @return [String,NilClass]
   def self.detect
-    "/dev/#{Dir.entries("/dev").find{|f| f =~ /tty.*usb.*/i}}"
+    device = Dir.entries("/dev").find{|f| f =~ /tty.*usb.*/i}
+    "/dev/#{device}" if device
   end
 
+  # TTY USB character device must ONLY have read/write permissions set:
+  def self.set_permissions_if_needed( device_path )
+    target_permission = 0b110110110
+    significant_permissions = File.stat(device_path).mode & target_permission
+    # If wrong permissions, set correct permission
+    if significant_permissions != target_permission
+      puts "Configuring permissions for device: '#{device_path}'"
+      linux_permissions = "%o" % target_permission
+      `sudo chmod #{ linux_permissions } #{ device_path }`
+    end
+  end
 end
+
