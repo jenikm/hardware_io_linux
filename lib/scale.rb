@@ -60,6 +60,7 @@ class Scale < SerialPort
   end
 
   # TTY USB character device must ONLY have read/write permissions set:
+  # @param [String] device_path
   def self.set_permissions_if_needed( device_path )
     target_permission = 0b110110110
     significant_permissions = File.stat(device_path).mode & target_permission

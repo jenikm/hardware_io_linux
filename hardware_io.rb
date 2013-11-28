@@ -16,9 +16,9 @@ class HardwareIO < Sinatra::Application
   get "/print_item_label.json" do
     order_item_id = params[:order_item_id]
     label = CGI.unescape(params[:label].to_s)
-    settings.printer.print_item_label(label)
+    success = settings.printer.print_item_label(label)
     content_type :json
-    wrap_with_callback( { :STATUS => "SUCCESS", :ORDER_ITEM_ID => order_item_id }.to_json )
+    wrap_with_callback( { :STATUS => success ? :SUCCESS : :FAILURE, :ORDER_ITEM_ID => order_item_id }.to_json )
   end
 
 

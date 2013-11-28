@@ -6,7 +6,8 @@ class Printer
   end
 
   def print_item_label(label)
-    Open3.popen3("lp -d #{printer_name} -o raw") { |stdin, stdout, stderr| stdin << label}
+    result = Open3.popen3("lp -d #{printer_name} -o raw"){|i, o| i<<label;i.close;o.read}
+    !result.empty?
   end
 
   def stop
