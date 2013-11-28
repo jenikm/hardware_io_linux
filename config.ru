@@ -10,9 +10,15 @@ require ::File.join( root, 'lib', 'scale' )
 require ::File.join( root, 'lib', 'printer' )
 require ::File.join( root, 'hardware_io' )
 
+scale_io = Scale.detect
+unless scale_io.empty?
+  puts "Configuring permissions"
+  `sudo chmod 666 #{scale_io}`
+end
+
 HARDWARE = {
-  :scale => Scale.new, # Could specify scale path as parameter
-  :printer => Printer.new #Could specify printer name as parameter
+  :scale => Scale.new(scale_io), # Could specify scale path as parameter
+  :printer => Printer.new("thermal_2844") #Could specify printer name as parameter
 }
 
 HardwareIO.set :scale, HARDWARE[:scale]

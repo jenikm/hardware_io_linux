@@ -52,4 +52,9 @@ class Scale < SerialPort
     5
   end
 
+  #Determines scale server interface
+  def self.detect
+    "/dev/#{Dir.entries("/dev").find{|f| f =~ /tty.*usb.*/i}}"
+  end
+
 end
