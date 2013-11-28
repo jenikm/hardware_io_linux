@@ -10,7 +10,7 @@ class HardwareIO < Sinatra::Application
       error = "Scale not setup"
     end
     content_type :json
-    wrap_with_callback( { :WEIGHT => weight, :ERROR => erorr }.to_json )
+    wrap_with_callback( { :WEIGHT => weight, :ERROR => error }.to_json )
   end
 
   get "/print_item_label.json" do
