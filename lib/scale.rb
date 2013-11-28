@@ -2,7 +2,7 @@ class Scale < SerialPort
 
   def Scale.new(device_path="/dev/tty.usbserial")
     begin
-      super(device_path, 9600)
+      super(device_path, 9600) if device_path
     rescue Errno::ENOENT => e
       $stderr.puts "Scale is not setup"
       $stderr.puts e

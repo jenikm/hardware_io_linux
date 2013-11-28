@@ -28,7 +28,7 @@ run HardwareIO.new
 [:INT, :TERM].each do |signal|
   old_handler = trap(signal) do
     begin
-      HARDWARE.values.each(&:stop)
+      HARDWARE.values.compact.each(&:stop)
     rescue Exception => e
       puts e
     end
